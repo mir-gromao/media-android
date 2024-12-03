@@ -3,6 +3,12 @@
 AndroidX Media is a collection of libraries for implementing media use cases on
 Android, including local playback (via ExoPlayer), video editing (via Transformer) and media sessions.
 
+## Mirriad HLS Testing (Android)
+- Run Android project: `demo`
+- Select the Emulated Device for emulating Android OS
+- Use the input text box to insert your HLS media URL
+- Click "Load Video" to play your M3U8 playlist.
+
 ## Documentation
 
 *   The [developer guide][] provides a wealth of information.
