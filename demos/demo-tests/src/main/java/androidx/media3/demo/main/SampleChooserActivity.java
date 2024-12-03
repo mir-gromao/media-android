@@ -40,8 +40,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageButton;
@@ -106,18 +104,6 @@ public class SampleChooserActivity extends AppCompatActivity
 
     sampleListView.setAdapter(sampleAdapter);
     sampleListView.setOnChildClickListener(this);
-
-    final EditText urlInput = findViewById(R.id.url_input);
-    final Button loadVideoButton = findViewById(R.id.load_video_button);
-
-    loadVideoButton.setOnClickListener(v -> {
-      String url = urlInput.getText().toString();
-      if (!url.isEmpty()) {
-        loadVideoFromUrl(url);
-      } else {
-        Toast.makeText(this, "Please enter a URL", Toast.LENGTH_SHORT).show();
-      }
-    });
 
     Intent intent = getIntent();
     String dataUri = intent.getDataString();
@@ -235,29 +221,6 @@ public class SampleChooserActivity extends AppCompatActivity
         && childPosition < groups.get(groupPosition).playlists.size()) {
       sampleListView.expandGroup(groupPosition); // shouldExpandGroup does not work without this.
       sampleListView.setSelectedChild(groupPosition, childPosition, /* shouldExpandGroup= */ true);
-    }
-  }
-
-  private void loadVideoFromUrl(String url) {
-    try {
-      Uri uri = Uri.parse(url);
-      MediaItem mediaItem = new MediaItem.Builder()
-          .setUri(uri)
-          .setMediaMetadata(new MediaMetadata.Builder().setTitle("Custom URL").build())
-          .build();
-
-      // Create intent to start the PlayerActivity
-      Intent intent = new Intent(this, PlayerActivity.class);
-      intent.putExtra(
-          IntentUtil.PREFER_EXTENSION_DECODERS_EXTRA,
-          isNonNullAndChecked(preferExtensionDecodersMenuItem));
-      IntentUtil.addToIntent(Collections.singletonList(mediaItem), intent);
-
-      // Start the player activity
-      startActivity(intent);
-    } catch (Exception e) {
-      Log.e(TAG, "Invalid URL or error loading video: " + url, e);
-      Toast.makeText(this, "Error loading video", Toast.LENGTH_SHORT).show();
     }
   }
 
